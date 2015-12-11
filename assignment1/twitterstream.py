@@ -1,5 +1,9 @@
 import oauth2 as oauth
-import urllib2 as urllib
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
+
 
 # See assignment1.html instructions or README for how to get these credentials
 
@@ -18,8 +22,8 @@ signature_method_hmac_sha1 = oauth.SignatureMethod_HMAC_SHA1()
 http_method = "GET"
 
 
-http_handler  = urllib.HTTPHandler(debuglevel=_debug)
-https_handler = urllib.HTTPSHandler(debuglevel=_debug)
+http_handler  = urllib2.HTTPHandler(debuglevel=_debug)
+https_handler = urllib2.HTTPSHandler(debuglevel=_debug)
 
 '''
 Construct, sign, and open a twitter request
@@ -42,7 +46,7 @@ def twitterreq(url, method, parameters):
     encoded_post_data = None
     url = req.to_url()
 
-  opener = urllib.OpenerDirector()
+  opener = urllib2.OpenerDirector()
   opener.add_handler(http_handler)
   opener.add_handler(https_handler)
 
@@ -55,7 +59,7 @@ def fetchsamples():
   parameters = []
   response = twitterreq(url, "GET", parameters)
   for line in response:
-    print line.strip()
+    print (line.decode('utf-8').strip())
 
 if __name__ == '__main__':
   fetchsamples()
