@@ -59,7 +59,7 @@ def fetchsamples():
   parameters = []
   response = twitterreq(url, "GET", parameters)
   for line in response:
-    print (line.strip())
+    print (line.decode('utf-8').strip())
 
 if __name__ == '__main__':
   fetchsamples()
